@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/Gurinderp/phaserjs/issues"
   },
-  "homepage": "https://github.com/Gurinderp/phaserjs#readme"
+  "homepage": "https://github.com/Gurinderp/phaserjs#readme",
+  "dependencies": {
+    "phaser": "^3.52.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
 }
