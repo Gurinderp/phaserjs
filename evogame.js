@@ -8,22 +8,40 @@ class EvoGame extends Phaser.Scene {
 	}
 
 	create() {
-		let player = this.add.image(400, 300, "Squittle");
-		console.log(this.player);
+		this.player = this.add.image(400, 300, "Squittle");
 
-		this.input.keyboard.on("keydown-D", function (event) {
-			player.x += 20;
-		});
-		this.input.keyboard.on("keydown-A", function (event) {
-			player.x -= 20;
-		});
 		this.input.keyboard.on("keydown-W", function (event) {
-			player.y -= 20;
+			this.player.y -= 20;
 		});
 		this.input.keyboard.on("keydown-S", function (event) {
-			player.y += 20;
+			this.player.y += 20;
 		});
+
+		this.key_A = this.input.keyboard.addKey(
+			Phaser.Input.Keyboard.KeyCodes.A
+		);
+		this.key_D = this.input.keyboard.addKey(
+			Phaser.Input.Keyboard.KeyCodes.D
+		);
+		this.key_W = this.input.keyboard.addKey(
+			Phaser.Input.Keyboard.KeyCodes.W
+		);
+		this.key_S = this.input.keyboard.addKey(
+			Phaser.Input.Keyboard.KeyCodes.S
+		);
+
+		console.log(this.player);
 	}
 
-	update() {}
+	update(delta) {
+		if (this.key_A.isDown) {
+			this.player.x -= 5;
+		} else if (this.key_D.isDown) {
+			this.player.x += 5;
+		} else if (this.key_W.isDown) {
+			this.player.y -= 5;
+		} else if (this.key_S.isDown) {
+			this.player.y += 5;
+		}
+	}
 }
