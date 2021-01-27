@@ -35,20 +35,34 @@ class EvoGame extends Phaser.Scene {
 		this.key_S = this.input.keyboard.addKey(
 			Phaser.Input.Keyboard.KeyCodes.S
 		);
+
+		function idleSquittle() {
+			setTimeout(function () {
+				let newResult = Math.random() * 10;
+				if (newResult >= 9) {
+					return idleSquittle();
+				} else if (newResult < 9 && newResult > 3) {
+					return randomMovement();
+				} else {
+					return squittleDance();
+				}
+			}, 5000);
+		}
+
 		// Working on this -- Need to make random movement
-		var tween = this.tweens.add(
-			{
-				targets: this.randos,
-				x: Math.random() * window.innerWidth,
-				y: Math.random() * window.innerHeight,
-				duration: 3000,
-				ease: "Elastic",
-				easeParams: [1.5, 0.5],
-				delay: 300,
-				onComplete: tweens(this),
-			},
-			this
-		);
+		// var tween = this.tweens.add(
+		// 	{
+		// 		targets: this.randos,
+		// 		x: Math.random() * window.innerWidth,
+		// 		y: Math.random() * window.innerHeight,
+		// 		duration: 3000,
+		// 		ease: "Elastic",
+		// 		easeParams: [1.5, 0.5],
+		// 		delay: 300,
+		// 		onComplete: tweens(this),
+		// 	},
+		// 	this
+		// );
 
 		console.log(this.player.height);
 	}
