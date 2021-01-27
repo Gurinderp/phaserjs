@@ -9,6 +9,7 @@ class EvoGame extends Phaser.Scene {
 	}
 
 	create() {
+		console.log(this);
 		console.log(window.innerHeight);
 		// Squittle Sprite is created
 		this.player = this.physics.add.image(400, 300, "Squittle");
@@ -17,6 +18,15 @@ class EvoGame extends Phaser.Scene {
 		this.rando.setScale(0.2);
 		this.player.setCollideWorldBounds(true);
 		this.player.name = "Squittle";
+
+		//Game FPS
+		// this.fps = 60;
+
+		// function loop() {
+		// 	console.log("in loop");
+		// }
+
+		// window.setInterval(loop, 1000 / this.fps);
 
 		// WASD Movement Key Binds
 		// Left Movement
@@ -47,6 +57,11 @@ class EvoGame extends Phaser.Scene {
 					return squittleDance();
 				}
 			}, 5000);
+		}
+
+		function randomMovement() {
+			this.x = Math.random() * window.innerWidth;
+			this.y = Math.random() * window.innerHeight;
 		}
 
 		// Working on this -- Need to make random movement
