@@ -161,6 +161,9 @@ class EvoGame extends Phaser.Scene {
 			console.log(this.rando.y);
 		} while (this.rando.y != posY);
 
+		console.log("%c Finalized X: " + this.rando.x, "color: green");
+		console.log("%c Finalized Y: " + this.rando.y, "color: green");
+
 		this.rando.status = "Idle";
 		this.rando.destX = null;
 		this.rando.destY = null;
