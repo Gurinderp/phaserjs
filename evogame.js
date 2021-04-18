@@ -29,6 +29,7 @@ class EvoGame extends Phaser.Scene {
 		// Squittle Sprite is created for automated controls
 		this.rando = this.physics.add.sprite(500, 300, "Squittle");
 		this.rando.status = "Idle";
+		this.rando.setCollideWorldBounds(true);
 
 		// Scale for player and automated squittle
 		this.player.setScale(0.3);
@@ -80,6 +81,9 @@ class EvoGame extends Phaser.Scene {
 		if (this.rando.status == "Idle") {
 			this.automatedMovements();
 		}
+		if (this.rando.status == "Walking") {
+			this.moveSquittle(this.rando.destX, this.rando.destY);
+		}
 	}
 
 	automatedMovements() {
@@ -105,7 +109,7 @@ class EvoGame extends Phaser.Scene {
 			setTimeout(function () {
 				console.log("%c   Complete", "color: green;");
 				that.randomLocation();
-			}, 10000);
+			}, 5000);
 		} else if (decision < 1) {
 			this.rando.status = "Not Idle";
 			console.log("Choice < 1");
@@ -118,21 +122,47 @@ class EvoGame extends Phaser.Scene {
 	}
 
 	randomLocation() {
-		console.log(this.game.config.width);
-		console.log(this.game.config.height);
+		let newX = Math.floor(Math.random() * this.game.config.width);
+		let newY = Math.floor(Math.random() * this.game.config.height);
 
-		let newX = Math.random() * this.game.config.width;
-		let newY = Math.random() * this.game.config.height;
+		this.calculateNewPos(newX, newY);
+	}
 
-		console.log(newX);
-		console.log(newY);
+	calculateNewPos(posX, posY) {
+		this.rando.destX = this.rando.x - posX;
+		this.rando.destY = this.rando.y - posY;
 
-		this.rando.x = newX;
-		this.rando.y = newY;
+		this.rando.status = "Walking";
+	}
 
-		console.log(newX);
-		console.log(newY);
+	moveSquittle(posX, posY) {
+		let movementX = 1;
+		let movementY = 1;
+
+		if (posX / -posX == -1) {
+			movementX = -movementX;
+		}
+
+		if (posY / -posY == -1) {
+			movementY = -movementY;
+		}
+
+		console.log("%cHeres the X: " + posX, "color: orange");
+
+		do {
+			this.rando.x += movementX;
+			console.log(this.rando.x);
+		} while (this.rando.x != posX);
+
+		console.log("%cHeres the Y: " + posY, "color: orange");
+
+		do {
+			this.rando.y += movementY;
+			console.log(this.rando.y);
+		} while (this.rando.y != posY);
 
 		this.rando.status = "Idle";
+		this.rando.destX = null;
+		this.rando.destY = null;
 	}
 }
