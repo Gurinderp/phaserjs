@@ -20,7 +20,7 @@ class EvoGame extends Phaser.Scene {
 		console.log("Window height = " + height);
 		console.log("Window width = " + width);
 		console.log("Game height = " + gameHeight);
-		console.log("Game height = " + gameWidth);
+		console.log("Game width = " + gameWidth);
 
 		// Squittle Sprite is created for player controls
 		this.player = this.physics.add.sprite(400, 300, "Squittle");
@@ -83,33 +83,56 @@ class EvoGame extends Phaser.Scene {
 	}
 
 	automatedMovements() {
+		// Sets status to Not Idle to prevent repeated firing
 		this.rando.status = "Not Idle";
-		let decision = Math.floor(Math.random() * 9);
+		// Calculates Decision value up to 10
+		let decision = Math.floor(Math.random() * 10);
 		console.log("Decision = " + decision);
+		// Binds EvoGame "this" to variable "that" for usage
+		// in setTimeout
 		let that = this;
 
-		if (decision >= 8) {
+		if (decision >= 10) {
 			this.rando.status = "Not Idle";
-			console.log("Choice >= 8");
+			console.log("Choice >= 10");
 			setTimeout(function () {
 				console.log("%c   Complete", "color: red;");
-				// that.automatedMovements();
-			}, 5000);
-		} else if (decision >= 4) {
+				that.automatedMovements();
+			}, 1000);
+		} else if (decision >= 1) {
 			this.rando.status = "Not Idle";
-			console.log("Choice >= 4");
+			console.log("Choice >= 1");
 			setTimeout(function () {
 				console.log("%c   Complete", "color: green;");
-				// that.automatedMovements();
-			}, 5000);
-		} else if (decision < 4) {
+				that.randomLocation();
+			}, 10000);
+		} else if (decision < 1) {
 			this.rando.status = "Not Idle";
-			console.log("Choice < 4");
+			console.log("Choice < 1");
 			setTimeout(function () {
 				console.log("%c   Complete", "color: blue;");
-				// that.automatedMovements();
-			}, 5000);
+				that.automatedMovements();
+			}, 1000);
 		}
 		console.log("Current Status = " + this.rando.status);
+	}
+
+	randomLocation() {
+		console.log(this.game.config.width);
+		console.log(this.game.config.height);
+
+		let newX = Math.random() * this.game.config.width;
+		let newY = Math.random() * this.game.config.height;
+
+		console.log(newX);
+		console.log(newY);
+
+		this.rando.x = newX;
+		this.rando.y = newY;
+
+		console.log(newX);
+		console.log(newY);
+
+		this.rando.status = "Idle";
 	}
 }
