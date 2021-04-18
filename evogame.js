@@ -23,13 +23,17 @@ class EvoGame extends Phaser.Scene {
 		console.log("Game height = " + gameWidth);
 
 		// Squittle Sprite is created for player controls
-		this.player = this.physics.add.image(400, 300, "Squittle");
+		this.player = this.physics.add.sprite(400, 300, "Squittle");
 		console.log("Player X = " + this.player.x);
 		console.log("Player Y = " + this.player.y);
 		// Squittle Sprite is created for automated controls
-		this.rando = this.physics.add.image(500, 300, "Squittle");
+		this.rando = this.physics.add.sprite(500, 300, "Squittle");
+		this.rando.status = "Idle";
+
+		// Scale for player and automated squittle
 		this.player.setScale(0.3);
 		this.rando.setScale(0.2);
+
 		// prevents squittles from leaving window
 		this.player.setCollideWorldBounds(true);
 		this.player.name = "Squittle";
@@ -52,11 +56,15 @@ class EvoGame extends Phaser.Scene {
 			Phaser.Input.Keyboard.KeyCodes.S
 		);
 
+		this.add = function () {
+			console.log(1 + 1);
+		};
+
 		// console.logs player pixel height
 		console.log("Player height = " + this.player.height);
 	}
 
-	update(delta) {
+	update() {
 		// WAS Key Movement
 		if (this.key_A.isDown) {
 			this.player.x -= 5;
@@ -68,6 +76,40 @@ class EvoGame extends Phaser.Scene {
 			this.player.y += 5;
 		}
 
-		function automatedMovements() {}
+		// Checks if rando squittles status is Idle
+		if (this.rando.status == "Idle") {
+			this.automatedMovements();
+		}
+	}
+
+	automatedMovements() {
+		this.rando.status = "Not Idle";
+		let decision = Math.floor(Math.random() * 9);
+		console.log("Decision = " + decision);
+		let that = this;
+
+		if (decision >= 8) {
+			this.rando.status = "Not Idle";
+			console.log("Choice >= 8");
+			setTimeout(function () {
+				console.log("%c   Complete", "color: red;");
+				// that.automatedMovements();
+			}, 5000);
+		} else if (decision >= 4) {
+			this.rando.status = "Not Idle";
+			console.log("Choice >= 4");
+			setTimeout(function () {
+				console.log("%c   Complete", "color: green;");
+				// that.automatedMovements();
+			}, 5000);
+		} else if (decision < 4) {
+			this.rando.status = "Not Idle";
+			console.log("Choice < 4");
+			setTimeout(function () {
+				console.log("%c   Complete", "color: blue;");
+				// that.automatedMovements();
+			}, 5000);
+		}
+		console.log("Current Status = " + this.rando.status);
 	}
 }
